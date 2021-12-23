@@ -20,7 +20,7 @@ Help would be nice - ThX.
 
 Help would be nice - ThX.
 
-####PI-Plates GPIO pin and board base address structure####
+#### PI-Plates GPIO pin and board base address structure
 ```
 struct config {
 	// Digitial input pin - Signal to interrupt (BCM pin 22)
@@ -37,7 +37,7 @@ struct config {
 };
 ```
 
-####PI-plates board handle structure####
+#### PI-plates board handle structure
 ```
 struct board
 {
@@ -55,7 +55,7 @@ struct board
 };
 ```
 
-####API Version structure####
+#### API Version structure
 ```
 struct version
 {
@@ -66,7 +66,8 @@ struct version
 };
 ```
 
-####Initialize GPIO/SPI configuration structure####
+#### Initialize GPIO/SPI configuration structure
+
 To communicate with the PI-Plates boards you have to initialize the GPIO/SPI communication configuration.
 **Note** that the pin numbers follows wiringPi GPIO layout and will be translated to the Broadcom pin layout.
 The C API library initializes the wiringPi with BCM pin layout. Function parameters:
@@ -86,7 +87,7 @@ int initConfig(
 			config_t* pConfig);
 ```
 
-#####Sample#####
+##### Sample
 ```
 config_t config;
 
@@ -114,7 +115,7 @@ Function parameters:
 int initBoards(uint8_t type, const config_t* pConfig);
 ```
 
-#####Sample#####
+##### Sample
 ```
 // Initialize all available DAQCplate boards
 if(initBoards(PP_BOARD_TYPE_DAQC, &config) < 0)
@@ -124,7 +125,7 @@ if(initBoards(PP_BOARD_TYPE_DAQC, &config) < 0)
 }
 ```
 
-####Retrieve available boards for specific board type####
+#### Retrieve available boards for specific board type
 This function return a list to available PI-Plates boards for a specified board type. **Note** The function
 caller MUST free allocated resources returned by this function. The type can be following value:
 - 1 **PP_BOARD_TYPE_RELAY**
@@ -140,7 +141,7 @@ Function parameters:
 uint8_t getBoardList(const uint8_t type, board_t** ppResult);
 ```
 
-#####Sample#####
+##### Sample
 ```
 board_t* list;
 uint8_t count = getBoardList(PP_BOARD_TYPE_DAQC, &list);
@@ -150,7 +151,7 @@ if (list != NULL)
 	free(list);
 ```
 
-####Retrieve count of available PI-Plates boards####
+#### Retrieve count of available PI-Plates boards
 Call this function to get the number of available boards specified by board type. Function parameters:
 - **type** One of the predefined board types
 - **return** Number of available boards
@@ -159,13 +160,13 @@ Call this function to get the number of available boards specified by board type
 uint8_t getBoardCount(const uint8_t type);
 ```
 
-#####Sample#####
+##### Sample
 ```
 uint8_t count = getBoardCount(PP_BOARD_TYPE_DAQC);
 printf("%d boards found...\n", count);
 ```
 
-####Retrieve a PI-Plates board handle by specified address####
+#### Retrieve a PI-Plates board handle by specified address
 Use this function to get a specific board handle. The address value must be between 0 to 7. This
 means the address you have configured at the addreass header on the board. If the address
 could not be found, the return value is NULL otherwise do NOT free this resource.
@@ -178,7 +179,7 @@ Function parameters:
 board_t* getBoardByAddress(const uint8_t address);
 ```
 
-#####Sample#####
+##### Sample
 ```
 // get our configured DAQCplate board (see jumper @ address header)
 board_t* board = getBoardByAddress(1);
@@ -190,7 +191,7 @@ if(board == NULL)
 
 ```
 
-####Enable frame signal####
+#### Enable frame signal
 This function raises the digital out pin to enable command transmission through the SPI bus.
 
 Function parameters:
@@ -201,7 +202,7 @@ Function parameters:
 int enableFrame(const board_t* pBoard);
 ```
 
-#####Sample#####
+##### Sample
 ```
 if(enableFrame(pBoard) != 0)
 {
@@ -211,7 +212,7 @@ if(enableFrame(pBoard) != 0)
 
 ```
 
-####Disable frame signal####
+#### Disable frame signal
 This function clear the digital out pin to prevent command transmission through the SPI bus.
 
 Function parameters:
@@ -222,7 +223,7 @@ Function parameters:
 int disableFrame(const board_t* pBoard);
 ```
 
-#####Sample#####
+##### Sample
 ```
 if(disableFrame(pBoard) != 0)
 {
@@ -232,7 +233,7 @@ if(disableFrame(pBoard) != 0)
 
 ```
 
-####Retrieve the SPI board address####
+#### Retrieve the SPI board address
 Use this function to test a the board address 0 to 7 or event get the SPI board address. To test a
 board address substract returned address value from board base address. The result must be the same
 value like in the address field of the board_t structure. This indicate that the given board address
@@ -247,7 +248,7 @@ Function parameters:
 uint8_t getAddress(const board_t* pBoard, uint8_t* pData);
 ```
 
-#####Sample#####
+##### Sample
 ```
 board_t board;
 
